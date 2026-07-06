@@ -1,0 +1,12 @@
+---
+- name: Include system configuration components
+  ansible.builtin.include_tasks: "{{ task }}"
+  loop:
+    - tuning.yml
+    - journald.yml
+    - hostname.yml
+    - security.yml
+    - exporter.yml
+    - motd.yml
+  loop_control:
+    loop_var: task

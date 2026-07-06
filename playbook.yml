@@ -2,6 +2,5 @@
 - hosts: all
   become: true
 
-  tasks:
-    - ansible.builtin.debug:
-        msg: "{{ inventory_hostname }}"
+  roles:
+    - common

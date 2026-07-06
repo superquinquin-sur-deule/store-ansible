@@ -1,0 +1,15 @@
+---
+- name: Disable core dumps with limits.d
+  ansible.builtin.copy:
+    dest: /etc/security/limits.d/99-disable-core-dumps.conf
+    content: |
+      * soft core 0
+      * hard core 0
+    mode: "0644"
+
+- name: Maintain ansible authorized keys
+  ansible.posix.authorized_key:
+    user: ansible
+    state: present
+    key: "{{ admin_keys.values() | join('\n') }}"
+    exclusive: true
