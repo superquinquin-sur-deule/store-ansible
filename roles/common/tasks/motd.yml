@@ -10,7 +10,7 @@
     path: /etc/update-motd.d/10-uname
     mode: "0444"
 
-- name: Deploy dynamic kiosk motd
+- name: Deploy dynamic custom motd
   ansible.builtin.template:
     src: "20-superquinquin.sh"
     dest: "/etc/update-motd.d/20-superquinquin"
