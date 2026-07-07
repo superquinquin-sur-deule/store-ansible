@@ -1,0 +1,47 @@
+---
+- name: Gather service facts
+  ansible.builtin.service_facts:
+
+- name: Create swaywm user
+  ansible.builtin.user:
+    name: swaywm
+    groups: video,input,render
+    shell: /bin/false
+    home: "/var/lib/swaywm"
+
+- name: Configure pam.d
+  ansible.builtin.copy:
+    src: pam.d-swaywm
+    dest: "/etc/pam.d/swaywm"
+    mode: "0644"
+
+- name: Install swaywm
+  ansible.builtin.package:
+    name: sway
+    state: present
+
+- name: Configure swaywm service
+  ansible.builtin.copy:
+    src: swaywm.service
+    dest: /etc/systemd/system/swaywm@.service
+  notify:
+    - restart-swaywm
+
+- name: Enable swaywm service on tty1
+  ansible.builtin.systemd_service:
+    name: swaywm@tty1.service
+    daemon_reload: true
+    state: started
+    enabled: true
+
+- name: Mask getty service
+  ansible.builtin.systemd_service:
+    name: getty@tty1.service
+    state: stopped
+    masked: true
+
+- name: Set default target to graphical
+  ansible.builtin.file:
+    src: /usr/lib/systemd/system/graphical.target
+    dest: /etc/systemd/system/default.target
+    state: link

@@ -1,0 +1,29 @@
+[Unit]
+Description=Sway Wayland compositor on %I
+After=systemd-user-sessions.service plymouth-quit-wait.service systemd-logind.service
+Conflicts=getty@%I.service
+ConditionPathExists=/dev/%I
+
+[Service]
+Type=simple
+User=swaywm
+Group=swaywm
+
+PAMName=swaywm
+StandardInput=tty
+StandardOutput=journal
+StandardError=journal
+TTYPath=/dev/%I
+UtmpIdentifier=%I
+UtmpMode=user
+
+Environment=XDG_SESSION_TYPE=wayland
+{% if ansible_virtualization_type not in ["none", ""] -%}
+Environment=WLR_NO_HARDWARE_CURSORS=1
+{% endif %}
+ExecStart=/usr/bin/sway --unsupported-gpu
+Restart=always
+
+[Install]
+WantedBy=graphical.target
+DefaultInstance=tty1

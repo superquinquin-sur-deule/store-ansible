@@ -1,0 +1,9 @@
+---
+- name: Restart swaywm service on tty1
+  systemd:
+    name: swaywm@tty1.service
+    state: restarted
+  when:
+    - ansible_facts.services['swaywm@tty1.service'] is defined
+    - ansible_facts.services['swaywm@tty1.service'].state == "running"
+  listen: restart-swaywm
