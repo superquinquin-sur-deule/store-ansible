@@ -22,8 +22,11 @@
 
 - name: Configure swaywm service
   ansible.builtin.copy:
-    src: swaywm.service
-    dest: /etc/systemd/system/swaywm@.service
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - { src: swaywm.service, dest: /etc/systemd/system/swaywm@.service }
+    - { src: sway-config, dest: /etc/sway/config }
   notify:
     - restart-swaywm
 
