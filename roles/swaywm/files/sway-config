@@ -1,0 +1,19 @@
+set $mod Mod1
+set $bg  /usr/share/plymouth/themes/superquinquin/assets/splash.png
+
+bar {
+    mode hide
+}
+
+default_border none
+default_floating_border none
+
+input * {
+    xkb_layout fr
+}
+
+output * {
+    bg $bg center #ffffff
+}
+
+include /etc/sway/config.d/*
