@@ -48,3 +48,10 @@
     src: /usr/lib/systemd/system/graphical.target
     dest: /etc/systemd/system/default.target
     state: link
+
+- name: Configure firefox to start with swaywm
+  ansible.builtin.copy:
+    dest: /etc/sway/config.d/exec_firefox
+    content: |
+      exec_always firefox --kiosk {{ firefox_url }}
+  notify: reload-swaywm
