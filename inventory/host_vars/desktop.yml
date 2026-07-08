@@ -1,0 +1,5 @@
+---
+firefox_policies_extra:
+  DisableDeveloperTools: false
+  BlockAboutConfig: false
+  BlockAboutAddons: false
