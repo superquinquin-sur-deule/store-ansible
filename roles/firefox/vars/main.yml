@@ -1,0 +1,63 @@
+---
+firefox_policies:
+  BlockAboutAddons: true
+  BlockAboutConfig: true
+  BlockAboutProfiles: true
+  BlockAboutSupport: true
+  DisableAppUpdate: true
+  DisableDeveloperTools: true
+  DisableFirefoxAccounts: true
+  DisableFirefoxStudies: true
+  DisableForgetButton: true
+  DisableProfileImport: true
+  DisableSafeMode: true
+  DisplayBookmarksToolbar: "{{ 'always' if firefox_bookmarks_bar_enabled else 'never' }}"
+  DisplayMenuBar: "never"
+  DontCheckDefaultBrowser: true
+  ManagedBookmarks: "{{ firefox_bookmarks }}"
+  NoDefaultBookmarks: true
+  OfferToSaveLogins: false
+  OverrideFirstRunPage: ""
+  OverridePostUpdatePage: ""
+  PasswordManagerEnabled: false
+  PrintingEnabled: false
+  PrivateBrowsingModeAvailability: 1
+  SearchBar: "unified"
+  SearchSuggestEnabled: false
+  ShowHomeButton: false
+  TranslateEnabled: false
+  SanitizeOnShutdown:
+    Downloads: true
+    FormData: true
+    History: true
+    Sessions: true
+  Permissions:
+    Camera: { BlockNewRequests: true }
+    Location: { BlockNewRequests: true }
+    Microphone: { BlockNewRequests: true }
+  Preferences:
+    "browser.tabs.inTitlebar": 0
+    "browser.sessionstore.max_resumed_crash_steps": 0
+    "browser.sessionstore.resume_from_crash": false
+    "browser.startup.homepage_override.mstone": "ignore"
+    "datareporting.policy.dataSubmissionPolicyAccepted": true
+    "datareporting.policy.dataSubmissionPolicyBypassNotification": true
+  UserMessaging:
+    ExtensionRecommendations: false
+    FeatureRecommendations: false
+    MoreFromMozilla: false
+    SkipOnboarding: true
+    UrlbarInterventions: false
+    WhatsNew: false
+  WebsiteFilter: >-
+    {% if firefox_policies_whitelist | length > 0 -%}
+    {{ {
+      "Block": ["<all_urls>"],
+      "Exceptions": firefox_policies_whitelist
+    } }}
+    {%- else -%}
+    {{ {
+      "Block": [],
+      "Exceptions": []
+    } }}
+    {%- endif %}
