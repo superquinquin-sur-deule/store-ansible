@@ -1,0 +1,5 @@
+---
+- name: Install firefox
+  ansible.builtin.package:
+    name: firefox-esr
+    state: present
