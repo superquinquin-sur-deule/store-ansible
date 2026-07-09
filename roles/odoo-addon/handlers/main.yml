@@ -1,0 +1,13 @@
+---
+- name: Deploy extension manifest
+  ansible.builtin.copy:
+    content: "{{ firefox_extension_manifest | to_nice_json }}"
+    dest: "{{ firefox_extension_dir }}/manifest.json"
+  listen: deploy-extension
+
+- name: Create extension in .xpi archive format
+  community.general.archive:
+    path: "{{ firefox_extension_dir }}/*"
+    dest: "{{ firefox_extension_dir }}.xpi"
+    format: zip
+  listen: deploy-extension
