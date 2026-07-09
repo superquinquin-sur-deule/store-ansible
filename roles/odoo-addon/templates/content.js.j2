@@ -1,0 +1,20 @@
+(function () {
+  const err = [...document.querySelectorAll(".alert-danger")].find(
+    (el) =>
+      el.innerText.includes("Wrong login/password") ||
+      el.innerText.includes("Mauvais nom d'utilisateur ou mot de passe"),
+  );
+
+  if (err)
+    return console.error(`[Kiosk Auth] Aborted: ${err.innerText.trim()}`);
+
+  const login = document.getElementById("login"),
+    pass = document.getElementById("password"),
+    form = document.querySelector(".oe_login_form");
+
+  if (login && pass && form && !login.value) {
+    login.value = "{{ odoo_addon_email }}";
+    pass.value = "{{ odoo_addon_password }}";
+    form.submit();
+  }
+})();

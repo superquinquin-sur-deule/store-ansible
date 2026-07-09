@@ -6,3 +6,6 @@
     - name: swaywm
       tags:
         - kiosk
+    - name: odoo-addon
+      tags:
+        - kiosk
