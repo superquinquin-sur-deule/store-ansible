@@ -1,0 +1,8 @@
+exec_always \
+    MOZ_ENABLE_WAYLAND=1 \
+    MOZ_CRASHREPORTER_DISABLE=1 \
+firefox
+    {%- if firefox_kiosk_mode %} --kiosk{% endif %} \
+    {% if firefox_url is string -%} {{ firefox_url }}
+    {% else -%} {{ firefox_url | join(' ') }}
+    {% endif %}
