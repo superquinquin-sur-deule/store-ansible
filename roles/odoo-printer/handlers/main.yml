@@ -1,0 +1,6 @@
+---
+- name: Restart pywebdriver
+  ansible.builtin.systemd_service:
+    name: pywebdriver
+    state: restarted
+  listen: restart-pywebdriver

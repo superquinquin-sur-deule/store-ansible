@@ -1,0 +1,23 @@
+---
+- name: Install pywebdriver with mkcert
+  ansible.builtin.package:
+    name: "{{ package }}"
+    state: present
+  loop:
+    - mkcert
+    - pywebdriver
+  loop_control:
+    loop_var: package
+
+- name: Configure pywebdriver
+  ansible.builtin.include_tasks: configure.yml
+  loop: "{{ pywebdriver_config | dict2items }}"
+  loop_control:
+    loop_var: section
+
+- name: Trust local certificate with firefox
+  firefox_policies:
+    path: /usr/lib/firefox-esr/distribution/policies.json
+    policies:
+      Certificates:
+        Install: [ "{{ cert_file }}" ]
