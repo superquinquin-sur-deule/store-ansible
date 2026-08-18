@@ -1,4 +1,5 @@
 ---
+extras_url: https://superquinquin-sur-deule.github.io/debian-extras/
 sysctl_settings:
   - name: 99-kiosk.conf
     parameters:

@@ -18,3 +18,8 @@
 - name: Apply sysctl configuration
   ansible.builtin.shell: sysctl -p /etc/sysctl.d/*.conf
   listen: apply-sysctl
+
+- name: Update APT package cache
+  ansible.builtin.apt:
+    update_cache: true
+  listen: apt-update
