@@ -33,6 +33,3 @@
     - { regexp: "^#?SystemMaxUse=", line: "SystemMaxUse=50M" }
     - { regexp: "^#?MaxRetentionSec=", line: "MaxRetentionSec=1day" }
   notify: restart-journald
-
-- name: Trigger critical handlers now
-  meta: flush_handlers

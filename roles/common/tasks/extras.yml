@@ -1,0 +1,20 @@
+---
+- name: Install required packages
+  ansible.builtin.apt:
+    name: "{{ package }}"
+    state: present
+  loop:
+    - ca-certificates
+    - python3-debian
+  loop_control:
+    loop_var: package
+
+- name: Add sqq/debian-extras repository
+  ansible.builtin.deb822_repository:
+    name: superquinquin
+    types: deb
+    uris: "{{ extras_url }}"
+    suites: ./
+    signed_by: "{{ extras_url }}/key.asc"
+    state: present
+  notify: apt-update

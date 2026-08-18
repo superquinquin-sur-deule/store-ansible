@@ -8,5 +8,9 @@
     - security.yml
     - exporter.yml
     - motd.yml
+    - extras.yml
   loop_control:
     loop_var: task
+
+- name: Trigger handlers now
+  meta: flush_handlers
