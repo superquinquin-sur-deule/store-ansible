@@ -1,0 +1,7 @@
+---
+pywebdriver_config:
+  flask:
+    host: "127.0.0.1"
+    port: "8069"
+  application:
+    drivers: "odoo8,escpos_driver"

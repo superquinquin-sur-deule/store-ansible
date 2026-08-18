@@ -1,0 +1,10 @@
+---
+- name: "Configure section [{{ section.key }}]"
+  community.general.ini_file:
+    path: "{{ config_file }}"
+    section: "{{ section.key }}"
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    mode: '0644'
+  loop: "{{ section.value | dict2items }}"
+  notify: restart-pywebdriver

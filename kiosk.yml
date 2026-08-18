@@ -9,3 +9,7 @@
     - name: odoo-addon
       tags:
         - kiosk
+    - name: odoo-printer
+      tags:
+        - kiosk
+        - printer

@@ -1,0 +1,3 @@
+---
+config_file: "/etc/pywebdriver/config.ini"
+cert_file: "/etc/pywebdriver/cert/cert.pem"
