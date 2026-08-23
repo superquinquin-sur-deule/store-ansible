@@ -1,0 +1,1 @@
+exec_always kanshi --config /etc/kanshi/config

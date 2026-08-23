@@ -15,10 +15,13 @@
     dest: "/etc/pam.d/swaywm"
     mode: "0644"
 
-- name: Install swaywm
+- name: Install desktop packages
   ansible.builtin.package:
-    name: sway
+    name: "{{ item }}"
     state: present
+  loop:
+    - sway
+    - kanshi
 
 - name: Configure swaywm service
   ansible.builtin.template:
@@ -28,6 +31,7 @@
     - { src: swaywm.service, dest: /etc/systemd/system/swaywm@.service }
     - { src: sway-config, dest: /etc/sway/config }
     - { src: exec_firefox.j2, dest: /etc/sway/config.d/exec_firefox }
+    - { src: exec_kanshi, dest: /etc/sway/config.d/exec_kanshi}
   notify:
     - restart-swaywm
 
@@ -49,3 +53,9 @@
     src: /usr/lib/systemd/system/graphical.target
     dest: /etc/systemd/system/default.target
     state: link
+
+- name: Install dynamic display configuration
+  ansible.builtin.copy:
+    src: autokanshi.py
+    dest: /usr/local/bin/autokanshi
+    mode: "0755"
