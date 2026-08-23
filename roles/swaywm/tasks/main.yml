@@ -29,7 +29,8 @@
     dest: "{{ item.dest }}"
   loop:
     - { src: swaywm.service, dest: /etc/systemd/system/swaywm@.service }
-    - { src: sway-config, dest: /etc/sway/config }
+    - { src: swaywm.default.j2, dest: /etc/default/swaywm }
+    - { src: sway.config, dest: /etc/sway/config }
     - { src: exec_firefox.j2, dest: /etc/sway/config.d/exec_firefox }
     - { src: exec_kanshi, dest: /etc/sway/config.d/exec_kanshi}
   notify:

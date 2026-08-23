@@ -1,0 +1,6 @@
+MOZ_ENABLE_WAYLAND=1
+MOZ_CRASHREPORTER_DISABLE=1
+XDG_SESSION_TYPE=wayland
+{% if ansible_virtualization_type not in ["none", ""] -%}
+WLR_NO_HARDWARE_CURSORS=1
+{% endif %}
