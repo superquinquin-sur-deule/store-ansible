@@ -1,5 +1,7 @@
-set $mod Mod1
+set $mod Mod4
 set $bg  /usr/share/plymouth/themes/superquinquin/assets/splash.png
+
+bindsym $mod+e exec swaymsg exit
 
 bar {
     mode hide
