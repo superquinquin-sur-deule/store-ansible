@@ -21,6 +21,7 @@ Environment=XDG_SESSION_TYPE=wayland
 {% if ansible_virtualization_type not in ["none", ""] -%}
 Environment=WLR_NO_HARDWARE_CURSORS=1
 {% endif %}
+ExecStartPre=+/usr/local/bin/autokanshi --write-to /etc/kanshi/config
 ExecStart=/usr/bin/sway --unsupported-gpu
 Restart=always
 
