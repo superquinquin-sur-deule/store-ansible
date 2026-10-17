@@ -18,3 +18,31 @@
     form.submit();
   }
 })();
+
+(function () {
+  "use strict";
+  const { open, send } = XMLHttpRequest.prototype;
+
+  XMLHttpRequest.prototype.open = function (_, url) {
+    this.isInvoice = typeof url === "string" && url.includes("action_invoice_download_pdf");
+    return open.apply(this, arguments);
+  };
+
+  XMLHttpRequest.prototype.send = function () {
+    if (!this.isInvoice) return send.apply(this, arguments);
+    const orig = this.onreadystatechange;
+
+    this.onreadystatechange = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        try {
+          const res = JSON.parse(this.responseText);
+          res.result = { type: "ir.actions.act_window_close", context: {} };
+          const payload = JSON.stringify(res);
+          Object.defineProperties(this, { responseText: { value: payload, writable: true }, response: { value: payload, writable: true } });
+        } catch (e) {}
+      }
+      if (orig) orig.apply(this, arguments);
+    };
+    return send.apply(this, arguments);
+  };
+})();
