@@ -36,10 +36,12 @@ firefox_policies:
     Location: { BlockNewRequests: true }
     Microphone: { BlockNewRequests: true }
   Preferences:
-    "browser.tabs.inTitlebar": 0
+    "browser.quitShortcut.disabled": true
     "browser.sessionstore.max_resumed_crash_steps": 0
     "browser.sessionstore.resume_from_crash": false
     "browser.startup.homepage_override.mstone": "ignore"
+    "browser.tabs.closeWindowWithLastTab": false
+    "browser.tabs.inTitlebar": 0
     "datareporting.policy.dataSubmissionPolicyAccepted": true
     "datareporting.policy.dataSubmissionPolicyBypassNotification": true
   UserMessaging:
