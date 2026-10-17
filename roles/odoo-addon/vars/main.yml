@@ -17,6 +17,7 @@ firefox_extension_manifest:
       js:
         - content.js
       run_at: document_idle
+      world: MAIN
 
 firefox_extension_policies:
   Preferences:
