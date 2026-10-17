@@ -15,6 +15,15 @@
   loop_control:
     loop_var: section
 
+- name: Grant CAP_NET_BIND_SERVICE to pywebdriver service
+  when: pywebdriver_config.flask.port | int in [80, 443]
+  ansible.builtin.lineinfile:
+    path: /usr/lib/systemd/system/pywebdriver.service
+    line: AmbientCapabilities=CAP_NET_BIND_SERVICE
+    regexp: '^AmbientCapabilities='
+    insertbefore: '^ExecStart='
+  notify: restart-pywebdriver
+
 - name: Trust local certificate with firefox
   firefox_policies:
     path: /usr/lib/firefox-esr/distribution/policies.json
