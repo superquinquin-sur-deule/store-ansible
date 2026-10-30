@@ -6,6 +6,7 @@
   loop:
     - ca-certificates
     - python3-debian
+    - python3-cryptography
   loop_control:
     loop_var: package
 
