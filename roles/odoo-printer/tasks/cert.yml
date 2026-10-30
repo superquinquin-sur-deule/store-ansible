@@ -1,0 +1,49 @@
+---
+- name: Create kiosk certificate directory
+  ansible.builtin.file:
+    path: "{{ ssl_cert_dir }}"
+    state: directory
+    mode: "0755"
+
+- name: Check if a certificate already exists
+  ansible.builtin.stat:
+    path: "{{ ssl_cert_file }}"
+  register: ssl_cert_stat
+
+- name: Check certificate expiration window
+  community.crypto.x509_certificate_info:
+    path: "{{ ssl_cert_file }}"
+    valid_at:
+      renewal_window: "+365d"
+  register: ssl_cert_info
+  when: ssl_cert_stat.stat.exists
+
+- name: Generate private key
+  community.crypto.openssl_privatekey:
+    path: "{{ ssl_key_file }}"
+    mode: "0600"
+
+- name: Generate CSR
+  community.crypto.openssl_csr:
+    path: "{{ ssl_csr_file }}"
+    privatekey_path: "{{ ssl_key_file }}"
+    common_name: "localhost"
+    subject_alt_name: "DNS:localhost,IP:127.0.0.1"
+
+- name: Generate self-signed certificate
+  community.crypto.x509_certificate:
+    path: "{{ ssl_cert_file }}"
+    csr_path: "{{ ssl_csr_file }}"
+    privatekey_path: "{{ ssl_key_file }}"
+    provider: selfsigned
+    selfsigned_not_after: "+3650d"
+    force: "{{ not ssl_cert_stat.stat.exists or not ssl_cert_info.valid_at.renewal_window }}"
+
+- name: Trust local certificate with firefox
+  firefox_policies:
+    path: /usr/lib/firefox-esr/distribution/policies.json
+    policies:
+      Certificates:
+        Install: [ "{{ ssl_cert_file }}" ]
+      LocalNetworkAccess:
+        Enabled: false
