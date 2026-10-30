@@ -30,3 +30,5 @@
     policies:
       Certificates:
         Install: [ "{{ cert_file }}" ]
+      LocalNetworkAccess:
+        Enabled: false
