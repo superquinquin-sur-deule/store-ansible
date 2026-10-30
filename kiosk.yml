@@ -2,14 +2,7 @@
 - hosts: all
   become: true
   roles:
-    - name: common
     - name: swaywm
-      tags:
-        - kiosk
     - name: odoo-addon
-      tags:
-        - kiosk
     - name: odoo-printer
-      tags:
-        - kiosk
-        - printer
+      tags: ["printer"]
